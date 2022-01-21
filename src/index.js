@@ -10,15 +10,25 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
-// 2
 const httpLink = createHttpLink({
   uri: "http://localhost:4000",
 });
 
-// 3
+const authLink = setContext((_, { headers }) => {
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTY0Mjc0MTA5Mn0.ZhnE8YeSVSA0Rvj9l24O6UdM6RY1Rc1PIUrViyMM5-s";
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

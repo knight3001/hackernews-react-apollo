@@ -4,6 +4,7 @@ import LinkList from "./components/LinkList";
 import CreateLink from "./components/CreateLink";
 import Header from "./components/Header";
 import Login from "./components/Login";
+import Search from "./components/Search";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" element={<LinkList />} />
           <Route exact path="/create" element={<CreateLink />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/search" element={<Search />} />
         </Routes>
       </div>
     </div>

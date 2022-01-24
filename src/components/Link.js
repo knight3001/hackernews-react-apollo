@@ -19,6 +19,7 @@ const VOTE_MUTATION = gql`
       }
       user {
         id
+        name
       }
     }
   }
@@ -37,7 +38,10 @@ const Link = (props) => {
       linkId: link.id,
     },
     update(cache, { data: { vote } }) {
-      const { feed } = cache.readQuery({ query: FEED_QUERY });
+      const { feed } = cache.readQuery({
+        query: FEED_QUERY,
+        variables: { take, skip, orderBy },
+      });
 
       const updatedLinks = feed.links.map((feedLink) => {
         if (feedLink.id === link.id) {
@@ -54,7 +58,13 @@ const Link = (props) => {
         data: {
           feed: {
             links: updatedLinks,
+            count: feed.count,
           },
+        },
+        variables: {
+          take,
+          skip,
+          orderBy,
         },
       });
     },

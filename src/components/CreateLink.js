@@ -10,10 +10,17 @@ const CREATE_LINK_MUTATION = gql`
       id
       description
       url
+      createdAt
       postedBy {
         id
         name
-        email
+      }
+      votes {
+        id
+        user {
+          id
+          name
+        }
       }
     }
   }
@@ -34,9 +41,9 @@ const CreateLink = () => {
     update: (cache, { data: { post } }) => {
       const take = LINKS_PER_PAGE;
       const skip = 0;
-      const orderBy = { createAt: "desc" };
+      const orderBy = { createdAt: "desc" };
 
-      const data = cache.readQuery({
+      const { feed } = cache.readQuery({
         query: FEED_QUERY,
         variables: {
           take,
@@ -49,7 +56,8 @@ const CreateLink = () => {
         query: FEED_QUERY,
         data: {
           feed: {
-            links: [post, ...data.feed.links],
+            links: [post, ...feed.links],
+            count: feed.count + 1,
           },
         },
         variables: {

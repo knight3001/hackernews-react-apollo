@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { AUTH_TOKEN } from "./constants";
 
 import {
   ApolloProvider,
@@ -18,8 +19,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0Mjk4MjY2NX0.W2lxCufFpQeH2Q7QQIDp3f1FSSocEbWA_aZuiaEZEKM";
+  const token = localStorage.getItem(AUTH_TOKEN);
   return {
     headers: {
       ...headers,

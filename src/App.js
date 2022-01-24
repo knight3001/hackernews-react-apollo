@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import LinkList from "./components/LinkList";
 import CreateLink from "./components/CreateLink";
 import Header from "./components/Header";
+import Login from "./components/Login";
 import "./App.css";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<LinkList />} />
           <Route exact path="/create" element={<CreateLink />} />
+          <Route exact path="/login" element={<Login />} />
         </Routes>
       </div>
     </div>
